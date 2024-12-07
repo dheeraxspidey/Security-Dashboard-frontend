@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply m-0 min-h-screen bg-gray-50 text-gray-900 antialiased;
+  }
+
+  body.dark {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  a {
+    @apply font-medium text-blue-600 no-underline hover:text-blue-700;
+  }
+
+  h1 {
+    @apply text-4xl leading-tight;
+  }
+
+  button {
+    @apply rounded-lg border border-transparent px-4 py-2 text-base font-medium 
+           transition-colors duration-200 ease-in-out cursor-pointer
+           bg-white hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
+
+  .dark button {
+    @apply bg-gray-800 hover:border-blue-400;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700;
+  }
+
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg shadow-sm 
+           border border-gray-200 dark:border-gray-700;
+  }
+}
+
+/* Remove the center alignment from body */
+body {
+  display: block !important;
+  place-items: unset !important;
+  min-width: unset !important;
+}
+
+/* Media query for system dark mode preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
