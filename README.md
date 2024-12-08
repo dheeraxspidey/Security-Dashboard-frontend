@@ -30,7 +30,7 @@ A modern Role-Based Access Control (RBAC) dashboard built with React, featuring 
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/vrv-rbac.git
+git clone https://github.com/dheeraxspidey/vrv-rbac.git
 ```
 
 2. Install dependencies:
@@ -107,7 +107,7 @@ The dashboard uses a custom dark theme with:
 
 ## 👥 Authors
 
-- **A.Dheeraj** - *Initial work* - [YourGithub](https://github.com/yourusername)
+- **A.Dheeraj** - *Initial work* - [YourGithub](https://github.com/dheeraxspidey)
 
 ## 🙏 Acknowledgments
 
