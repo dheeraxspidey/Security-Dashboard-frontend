@@ -1,8 +1,16 @@
 import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+function Sidebar({ isCollapsed, setIsCollapsed }) {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const navigation = [
     { 
@@ -34,33 +42,35 @@ function Sidebar() {
   return (
     <div 
       className={`fixed inset-y-0 left-0 
-        bg-gradient-to-b from-blue-900 to-blue-800 
-        dark:from-gray-800 dark:to-gray-900 
+        bg-gradient-to-br from-primary-50 via-primary-100 to-primary-200
+        backdrop-blur-sm bg-opacity-95
+        border-r border-white/10
+        shadow-dark-lg
         text-white transition-all duration-300 ease-in-out z-30
-        ${isCollapsed ? 'w-20' : 'w-64'}`}
+        ${isCollapsed || isMobile ? 'w-20' : 'w-64'}
+        translate-x-0`}
     >
       {/* Header */}
       <div className="flex items-center justify-between h-16 px-4 
-                    border-b border-blue-700/50 dark:border-gray-700/50">
-        {!isCollapsed && (
+                    border-b border-white/10 bg-white/5">
+        {!isCollapsed && !isMobile && (
           <h1 className="text-xl font-bold tracking-wider text-white">
             VRV Security
           </h1>
         )}
-        <button 
-          onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-2 rounded-lg 
-             bg-blue-800/50 dark:bg-gray-700/50
-             hover:bg-blue-700/50 dark:hover:bg-gray-600/50
-             text-white/80 hover:text-white
-             transition-all duration-200
-             focus:outline-none focus:ring-2 focus:ring-white/20"
-        >
-          <i className={`fas fa-chevron-${isCollapsed ? 'right' : 'left'} 
-                transition-all duration-200
-                transform ${isCollapsed ? 'rotate-180' : ''}`}>
-          </i>
-        </button>
+        {!isMobile && (
+          <button 
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="p-2 rounded-lg 
+               bg-white/10 hover:bg-white/20
+               text-white/80 hover:text-white
+               transition-all duration-200
+               shadow-dark-sm hover:shadow-dark-glow
+               focus:outline-none focus:ring-2 focus:ring-white/20"
+          >
+            <i className={`fas fa-chevron-${isCollapsed ? 'right' : 'left'}`}></i>
+          </button>
+        )}
       </div>
 
       {/* Navigation */}
@@ -72,21 +82,22 @@ function Sidebar() {
             className={({ isActive }) =>
               `group flex items-center px-4 py-3 my-1
               rounded-lg transition-all duration-200 ease-in-out
-              hover:bg-white/10 
+              hover:bg-white/10 hover:shadow-dark-glow
               ${isActive 
-                ? 'bg-white/20 text-white' 
-                : 'text-white/70 hover:text-white'}`
+                ? 'bg-white/20 shadow-dark-glow text-white' 
+                : 'text-white/70 hover:text-white'}
+              ${isCollapsed || isMobile ? 'justify-center' : ''}`
             }
           >
-            <i className={`${item.icon} w-6 transition-colors duration-200
-                        ${isCollapsed ? 'text-xl' : ''}`}>
+            <i className={`${item.icon} transition-colors duration-200
+                        ${isCollapsed || isMobile ? 'text-xl' : 'w-6'}`}>
             </i>
-            {!isCollapsed && (
+            {!isCollapsed && !isMobile && (
               <div className="ml-3">
                 <span className="font-medium block">
                   {item.name}
                 </span>
-                <span className="text-xs text-white/50 group-hover:text-white/70 
+                <span className="text-xs text-blue-200 group-hover:text-blue-100 
                               transition-colors duration-200">
                   {item.description}
                 </span>
@@ -98,28 +109,31 @@ function Sidebar() {
 
       {/* Footer */}
       <div className="absolute bottom-0 w-full p-4 
-                    border-t border-blue-700/50 dark:border-gray-700/50">
-        {!isCollapsed ? (
+                    border-t border-white/10 bg-white/5">
+        {!isCollapsed && !isMobile ? (
           <div className="flex items-center space-x-3 
                        hover:bg-white/10 rounded-lg p-2 
-                       transition-all duration-200 cursor-pointer">
-            <div className="w-8 h-8 bg-white/10 
-                          rounded-full flex items-center justify-center">
-              <i className="fas fa-headset text-white"></i>
-            </div>
+                       transition-all duration-200 cursor-pointer
+                       hover:shadow-dark-glow">
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=2563eb"
+              alt="Profile"
+              className="w-8 h-8 rounded-full ring-2 ring-white/10"
+            />
             <div className="text-sm">
-              <p className="font-medium text-white">Need Help?</p>
-              <p className="text-blue-300 dark:text-gray-400">Contact Support</p>
+              <p className="font-medium text-white">Admin User</p>
+              <p className="text-blue-200">admin@vrvsecurity.com</p>
             </div>
           </div>
         ) : (
           <div className="flex justify-center">
-            <div className="w-10 h-10 bg-white/10 
-                         rounded-full flex items-center justify-center 
-                         hover:bg-white/20 transition-colors duration-200 
-                         cursor-pointer">
-              <i className="fas fa-headset text-white"></i>
-            </div>
+            <img
+              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=2563eb"
+              alt="Profile"
+              className="w-10 h-10 rounded-full ring-2 ring-white/10 
+                       hover:ring-white/30 transition-all duration-200 
+                       cursor-pointer hover:shadow-dark-glow"
+            />
           </div>
         )}
       </div>
