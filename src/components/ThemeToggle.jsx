@@ -3,11 +3,22 @@ import { useState, useEffect } from 'react';
 function ThemeToggle() {
   const [isDark, setIsDark] = useState(false);
 
+  // Initialize theme
   useEffect(() => {
-    setIsDark(
-      localStorage.theme === 'dark' || 
-      (!localStorage.theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    );
+    // Check if we're in the browser environment
+    if (typeof window !== 'undefined') {
+      const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      const initialTheme = localStorage.theme === 'dark' || 
+        (!('theme' in localStorage) && darkModeMediaQuery.matches);
+      
+      setIsDark(initialTheme);
+      
+      if (initialTheme) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    }
   }, []);
 
   const toggleTheme = () => {

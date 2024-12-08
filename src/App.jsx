@@ -17,6 +17,33 @@ function App() {
     }
   }, [darkMode]);
 
+  useEffect(() => {
+    const updateThemeColor = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      document.querySelector('meta[name="theme-color"]')
+        .setAttribute('content', isDark ? '#111827' : '#ffffff');
+    };
+
+    // Update initially
+    updateThemeColor();
+
+    // Watch for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          updateThemeColor();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
       <BrowserRouter>
