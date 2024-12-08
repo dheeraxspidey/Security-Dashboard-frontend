@@ -4,6 +4,10 @@
 
 A modern Role-Based Access Control (RBAC) dashboard built with React, featuring a sleek dark theme and comprehensive security management tools.
 
+## 🌟 Live Demo
+
+[View Live Demo](https://6755b7a33422f40008f7535e--beamish-eclair-7079b0.netlify.app/) - Deployed on Netlify
+
 ## 🌟 Features
 
 - **Modern UI/UX**: Sleek dark theme with smooth transitions and animations
@@ -24,6 +28,7 @@ A modern Role-Based Access Control (RBAC) dashboard built with React, featuring 
 - **Icons**: Font Awesome
 - **Charts**: Chart.js with React integration
 - **Animations**: CSS transitions and transforms
+- **Deployment**: Netlify
 
 ## 📦 Installation
 
