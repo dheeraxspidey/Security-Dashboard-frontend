@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import ThemeToggle from '../ThemeToggle';
 
 function Header() {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -57,6 +58,9 @@ function Header() {
               <i className="fas fa-search absolute left-3 top-3 text-gray-400"></i>
             </div>
           </div>
+
+          {/* Theme Toggle */}
+          <ThemeToggle />
 
           {/* Notifications */}
           <div className="relative">

@@ -26,10 +26,11 @@ ChartJS.register(
   ArcElement
 );
 
-function Dashboard({ darkMode }) {
+function Dashboard() {
   const { users, roles, permissions } = useStore();
   const [activeUsers, setActiveUsers] = useState(0);
   const [recentActivities, setRecentActivities] = useState([]);
+  const [isDarkMode, setIsDarkMode] = useState(document.documentElement.classList.contains('dark'));
   
   // Initialize chart data with default values
   const [userTrend, setUserTrend] = useState({
@@ -56,6 +57,24 @@ function Dashboard({ darkMode }) {
       borderWidth: 1,
     }]
   });
+
+  // Add theme change observer
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDarkMode(document.documentElement.classList.contains('dark'));
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     // Calculate active users
@@ -117,13 +136,71 @@ function Dashboard({ darkMode }) {
     },
   ];
 
+  // Update chart options based on current theme
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: isDarkMode ? '#e5e7eb' : '#1f2937',
+          font: {
+            size: 12
+          }
+        }
+      },
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        grid: {
+          color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+        },
+        ticks: {
+          color: isDarkMode ? '#e5e7eb' : '#1f2937',
+          font: {
+            size: 12
+          }
+        }
+      },
+      x: {
+        grid: {
+          color: isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
+        },
+        ticks: {
+          color: isDarkMode ? '#e5e7eb' : '#1f2937',
+          font: {
+            size: 12
+          }
+        }
+      }
+    },
+  };
+
+  const doughnutOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: isDarkMode ? '#e5e7eb' : '#1f2937',
+          font: {
+            size: 12
+          }
+        }
+      },
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-semibold">Dashboard Overview</h1>
-          <p className="text-gray-500">Monitor your system's security and user activities</p>
+          <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Dashboard Overview</h1>
+          <p className="text-gray-500 dark:text-gray-400">Monitor your system's security and user activities</p>
         </div>
         <div className="flex space-x-3">
           <button className="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
@@ -158,57 +235,22 @@ function Dashboard({ darkMode }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* User Trend Chart */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-medium mb-4">User Activity Trend</h3>
+          <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-white">User Activity Trend</h3>
           <div className="h-64">
             <Line 
               data={userTrend}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                  legend: {
-                    position: 'bottom',
-                    labels: {
-                      color: darkMode ? 'white' : 'black'
-                    }
-                  },
-                },
-                scales: {
-                  y: {
-                    beginAtZero: true,
-                    ticks: {
-                      color: darkMode ? 'white' : 'black'
-                    }
-                  },
-                  x: {
-                    ticks: {
-                      color: darkMode ? 'white' : 'black'
-                    }
-                  }
-                },
-              }}
+              options={chartOptions}
             />
           </div>
         </div>
 
         {/* Role Distribution Chart */}
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-          <h3 className="text-lg font-medium mb-4">Role Distribution</h3>
+          <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-white">Role Distribution</h3>
           <div className="h-64">
             <Doughnut 
               data={permissionDistribution}
-              options={{
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                  legend: {
-                    position: 'bottom',
-                    labels: {
-                      color: darkMode ? 'white' : 'black'
-                    }
-                  },
-                },
-              }}
+              options={doughnutOptions}
             />
           </div>
         </div>
