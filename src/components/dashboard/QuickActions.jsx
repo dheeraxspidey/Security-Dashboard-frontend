@@ -1,30 +1,39 @@
+import { useNavigate } from 'react-router-dom';
+
 function QuickActions() {
+  const navigate = useNavigate();
+
   const actions = [
     { 
       title: 'Add User',
       icon: 'fas fa-user-plus',
       color: 'blue',
-      action: () => console.log('Add user clicked')
+      path: '/users'
     },
     { 
       title: 'New Role',
       icon: 'fas fa-shield-alt',
       color: 'green',
-      action: () => console.log('New role clicked')
+      path: '/roles'
     },
     { 
       title: 'Audit Log',
       icon: 'fas fa-history',
       color: 'yellow',
-      action: () => console.log('Audit log clicked')
+      path: '/permissions'
     },
     { 
       title: 'Security',
       icon: 'fas fa-lock',
       color: 'red',
-      action: () => console.log('Security clicked')
+      path: '/settings'
     }
   ];
+
+  const handleNavigation = (path) => {
+    console.log('Navigating to:', path);
+    navigate(path);
+  };
 
   return (
     <div className="bg-primary-50/30 backdrop-blur-sm rounded-lg p-6 
@@ -34,7 +43,7 @@ function QuickActions() {
         {actions.map((action) => (
           <button
             key={action.title}
-            onClick={action.action}
+            onClick={() => handleNavigation(action.path)}
             className={`p-4 rounded-lg bg-${action.color}-500/20 
                      hover:bg-${action.color}-500/30
                      group flex flex-col items-center justify-center
