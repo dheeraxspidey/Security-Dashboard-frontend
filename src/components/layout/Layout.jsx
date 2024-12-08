@@ -24,17 +24,17 @@ function Layout({ children }) {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-black">
+    <div className="flex min-h-screen bg-gray-900">
       <aside className={`fixed top-0 left-0 h-full z-30
         ${isMobile ? 'w-20' : (isCollapsed ? 'w-20' : 'w-64')}
         transition-all duration-300 ease-in-out`}>
         <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       </aside>
       
-      <div className={`flex-1 transition-all duration-300 ease-in-out bg-black
+      <div className={`flex-1 transition-all duration-300 ease-in-out bg-gray-900
         ${isMobile ? 'ml-20' : (isCollapsed ? 'ml-20' : 'ml-64')}`}>
         <Header onMenuClick={() => setIsCollapsed(!isCollapsed)} />
-        <main className="p-4 md:p-6 lg:p-8 text-white bg-black">
+        <main className="p-4 md:p-6 lg:p-8 text-white bg-gray-900">
           {children}
         </main>
       </div>
