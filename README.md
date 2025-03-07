@@ -1,4 +1,4 @@
-# VRV Security - RBAC Dashboard
+#Security - RBAC Dashboard
 
 ![VRV Security](./public/preview.png)
 
