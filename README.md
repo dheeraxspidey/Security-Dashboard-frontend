@@ -1,6 +1,6 @@
 #Security - RBAC Dashboard
 
-![VRV Security](./public/preview.png)
+
 
 A modern Role-Based Access Control (RBAC) dashboard built with React, featuring a sleek dark theme and comprehensive security management tools.
 
