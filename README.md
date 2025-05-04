@@ -3,6 +3,7 @@
 
 
 A modern Role-Based Access Control (RBAC) dashboard built with React, featuring a sleek dark theme and comprehensive security management tools.
+![image](https://github.com/user-attachments/assets/45365b95-a60e-4891-840b-2fc4d3d4b19d)
 
 ## 🌟 Live Demo
 
