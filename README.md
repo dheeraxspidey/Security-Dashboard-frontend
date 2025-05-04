@@ -6,7 +6,7 @@ A modern Role-Based Access Control (RBAC) dashboard built with React, featuring 
 
 ## 🌟 Live Demo
 
-[View Live Demo](https://6755b7a33422f40008f7535e--beamish-eclair-7079b0.netlify.app/) - Deployed on Netlify
+[View Live Demo]([https://6755b7a33422f40008f7535e--beamish-eclair-7079b0.netlify.app/](https://beamish-eclair-7079b0.netlify.app/)) - Deployed on Netlify
 
 ## 🌟 Features
 
